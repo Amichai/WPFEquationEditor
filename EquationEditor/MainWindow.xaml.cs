@@ -20,7 +20,8 @@ namespace EquationEditor {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            this.input.Text = @"y=3+4*2/(1-x)^2^3";
+            //this.input.Text = @"y=3+4*2/(1-x)^2^3";
+            this.input.Text = @"add(3,4) / 5";
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
             this.input.BorderBrush = Brushes.Gray;
             update();

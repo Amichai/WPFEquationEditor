@@ -10,7 +10,7 @@ namespace EquationEditor.Tokens {
             this.Value = val;
             this.Type = TokenType.keyword;
         }
-        public int Children { get; set; }
+        public int NumberOfChildren { get; set; }
 
         public TokenType Type { get; set; }
 

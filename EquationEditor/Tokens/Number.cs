@@ -13,7 +13,7 @@ namespace EquationEditor.Tokens {
         }
 
         public double numericalVal { get; private set; }
-        public int Children { get; set; }
+        public int NumberOfChildren { get; set; }
 
         public TokenType Type { get; set; }
 

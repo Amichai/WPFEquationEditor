@@ -20,7 +20,7 @@ namespace EquationEditor {
             { ";", new BreakingChar(";")},
             { "(", new BreakingChar("(")},
             { ")", new BreakingChar(")")},
-            { "add", new Function(",", 2)},
+            { "add", new Function("add", 2)},
         };
 
         public static IToken Create(string t) {

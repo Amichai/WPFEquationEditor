@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EquationEditor.Tokens {
-    class Function : IToken {
+    class Function : IToken, IFunction {
         public Function(string val, int children) {
             this.Value = val;
             this.Type = TokenType.function;
         }
-        public int Children { get; set; }
+        public int NumberOfChildren { get; set; }
 
         public TokenType Type { get; set; }
 
