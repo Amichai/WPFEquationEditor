@@ -8,9 +8,9 @@ using System.Windows.Controls;
 
 namespace EquationEditor {
     public class Node {
-        public Token Val { get; set; }
+        public IToken Val { get; set; }
         public List<Node> Children { get; set; }
-        public Node(Token t) {
+        public Node(IToken t) {
             this.Val = t;
             this.Children = new List<Node>();
         }

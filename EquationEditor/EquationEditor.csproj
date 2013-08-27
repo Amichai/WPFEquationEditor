@@ -53,9 +53,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Tokens\BreakingChar.cs" />
+    <Compile Include="Tokens\Function.cs" />
+    <Compile Include="Tokens\InfixOperator.cs" />
+    <Compile Include="Tokens\IToken.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="OperatorPrecedence.cs" />
-    <Compile Include="Token.cs" />
+    <Compile Include="Tokenizer.cs" />
+    <Compile Include="TokenLibrary.cs" />
+    <Compile Include="Tokens\Keyword.cs" />
+    <Compile Include="Tokens\Number.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

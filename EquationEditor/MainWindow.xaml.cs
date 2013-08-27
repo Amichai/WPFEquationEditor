@@ -20,20 +20,28 @@ namespace EquationEditor {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            this.input.Text = @"y = 3 + 4 * 2 / ( 1 - x ) ^ 2 ^ 3";
+            this.input.Text = @"y=3+4*2/(1-x)^2^3";
+            this.input.BorderThickness = new Thickness(1, 1, 1, 1);
+            this.input.BorderBrush = Brushes.Gray;
             update();
         }
 
         ParseTree tree = new ParseTree();
+        Tokenizer tokenizer = new Tokenizer();
 
         private void Update_Click_1(object sender, RoutedEventArgs e) {
             update();
         }
 
         private void update() {
-            var queue = tree.TokenQueue(this.input.Text);
+            var queue = tokenizer.Tokenize(this.input.Text);
             tree.BuildTree(queue);
             this.resultStack.Children.Add(tree.Root.GetElement());
+            this.input.BorderBrush = Brushes.Gray;
+            //try {
+            //} catch {
+            //    this.input.BorderBrush = Brushes.Red;
+            //}
         }
     }
 }
