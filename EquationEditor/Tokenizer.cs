@@ -84,10 +84,11 @@ namespace EquationEditor {
                                 } else {
                                     break;
                                 }
-                            } else {
+                            } else if (operatorStack.Peek() is IFunction) {
                                 postFixed.Enqueue(operatorStack.Pop());
+                            } else {
+                                break;
                             }
-
                         }
                         operatorStack.Push(token);
                         break;
