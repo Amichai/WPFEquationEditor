@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525" KeyDown="Window_KeyDown_1">
     <StackPanel Name="resultStack">
-        <TextBox Name="input" Margin="10"></TextBox>
+        <TextBox Name="input" Margin="10" ></TextBox>
     </StackPanel>
 </Window>
