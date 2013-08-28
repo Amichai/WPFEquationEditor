@@ -9,21 +9,32 @@ namespace EquationEditor {
     class Tokenizer {
         private static List<char> breakingChars = new List<char> { ' ', ',', ')', '(', '*', '/', '^', '+', '-', '=' };
 
+        private List<string> splitString(string input, char c) {
+            List<string> result = new List<string>();
+            int index = input.IndexOf(c);
+            while (index != -1) {
+                if (index > 0) {
+                    result.Add(input.Substring(0, index));
+                }
+                if (c != ' ') {
+                    result.Add(c.ToString());
+                }
+                input = string.Concat(input.Skip(index + 1));
+                index = input.IndexOf(c);
+            }
+            if (input != "") {
+                result.Add(input);
+            }
+            return result;
+        }
+
         private List<string> breakOnChar(List<string> input, char c) {
             List<string> outputStrings = new List<string>();
             foreach (var s in input) {
-                var split = s.Split(new char[] { c }, StringSplitOptions.RemoveEmptyEntries);
-                if (s.First() == c && c != ' ') {
-                    outputStrings.Add(c.ToString());
-                }
+                var split = splitString(s, c);
                 for (int i = 0; i < split.Count(); i++) {
-                    outputStrings.Add(split[i]);
-                    if (i < split.Count() - 1 && c != ' ') {
-                        outputStrings.Add(c.ToString());
-                    }
-                }
-                if (s.Last() == c && c != ' ' && split.Count() > 0) {
-                    outputStrings.Add(c.ToString());
+                    var toAdd = split[i];
+                    outputStrings.Add(toAdd);
                 }
             }
             return outputStrings;
