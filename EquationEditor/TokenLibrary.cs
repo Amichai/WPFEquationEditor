@@ -21,6 +21,7 @@ namespace EquationEditor {
             { "(", new BreakingChar("(")},
             { ")", new BreakingChar(")")},
             { "add", new Function("add", 2)},
+            { "sum", new Function("sum", 2)},
         };
 
         public static IToken Create(string t) {

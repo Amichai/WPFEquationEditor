@@ -47,12 +47,28 @@ namespace EquationEditor {
             } else if(this.Token.Type == TokenType.function){
                 StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center };
                 sp.Children.Add(getTextBlock(Token.Value));
+                sp.Children.Add(getTextBlock("("));
                 for (int i = 0; i < this.Children.Count(); i++) {
                     sp.Children.Add(this.Children[i].GetElement());
+                    if (i < this.Children.Count() - 1) {
+                        sp.Children.Add(getTextBlock(","));
+                    }
                 }
+                sp.Children.Add(getTextBlock(")"));
                 return sp;
+            } else if (this.Token.Type == TokenType.number) {
+                return new TextBlock() {
+                    Text = Token.Value,
+                    TextAlignment = TextAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
             } else {
-                return new TextBlock() { Text = Token.Value, TextAlignment = TextAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+                return new TextBlock() {
+                    Text = Token.Value,
+                    FontStyle = FontStyles.Italic,
+                    TextAlignment = TextAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
             }
         }
 

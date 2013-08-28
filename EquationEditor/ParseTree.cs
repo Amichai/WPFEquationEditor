@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EquationEditor.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -25,7 +26,11 @@ namespace EquationEditor {
                     stackBuffer.Push(new Node(t));
                 }
             }
-            Root = stackBuffer.Single();
+            if (stackBuffer.Count() > 0) {
+                Root = stackBuffer.Single();
+            } else {
+                Root = new Node(new Keyword(""));
+            }
         }
 
         public Node Root;

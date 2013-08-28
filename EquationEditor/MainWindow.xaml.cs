@@ -23,24 +23,22 @@ namespace EquationEditor {
             //this.input.Text = @"y=3+4*2/(1-x)^2^3";
             //this.input.Text = @"add(3,4) / 5";
             //this.input.Text = @"3 + 4 * ( 3 / 22 - 22) ^ 3 ^4";
-            this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))";
+            //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))";
+            //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))  / 33^3^3^3^3^3^3^3^3^3";
+
 
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
             this.input.BorderBrush = Brushes.Gray;
             update();
         }
 
-        ParseTree tree = new ParseTree();
-        Tokenizer tokenizer = new Tokenizer();
-
         private void Update_Click_1(object sender, RoutedEventArgs e) {
             update();
         }
 
         private void update() {
-            if (this.input.Text == "") {
-                return;
-            }
+            ParseTree tree = new ParseTree();
+            Tokenizer tokenizer = new Tokenizer();
             var queue = tokenizer.Tokenize(this.input.Text);
             tree.BuildTree(queue);
             int insertIdx = this.resultStack.Children.IndexOf(this.input);
@@ -50,10 +48,6 @@ namespace EquationEditor {
             this.input.BorderBrush = Brushes.Gray;
             this.input.Text = "";
             this.lineNumber++;
-            //try {
-            //} catch {
-            //    this.input.BorderBrush = Brushes.Red;
-            //}
         }
 
         int lineNumber = 0;
@@ -71,14 +65,14 @@ namespace EquationEditor {
         private void Window_KeyDown_1(object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.Enter:
-                    if (this.input.Text.Count() > 0) {
-                        update();
-                    } else {
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
                         var text = (this.resultStack.Children[lineNumber - 1] as FrameworkElement).Tag as string;
                         this.input.Text = text;
                         this.input.CaretIndex = this.input.Text.Length;
                         Swap(this.resultStack.Children, lineNumber, lineNumber - 1);
                         lineNumber--;
+                    } else {
+                        update();
                     }
                     break;
             }
