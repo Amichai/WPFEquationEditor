@@ -10,6 +10,7 @@ namespace EquationEditor {
 
         private static Dictionary<string, IToken> tokens = new Dictionary<string, IToken>() {
             { "^", new InfixOperator("^", 4, Associativity.right ) }, 
+            { "**", new InfixOperator("**", 4, Associativity.right ) }, 
             { "*", new InfixOperator("*", 3, Associativity.left ) }, 
             { "/", new InfixOperator("/", 3, Associativity.left ) }, 
             { @"\over", new InfixOperator(@"\over", 3, Associativity.left ) }, 

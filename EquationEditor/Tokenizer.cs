@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace EquationEditor {
     class Tokenizer {
-        private static List<char> breakingChars = new List<char> { ' ', ',', ')', '(', '*', '/', '^', '+', '-', '=' };
+        private static List<string> breakingChars = new List<string> { " ", ",", ")", "(", "*", "/", "^", "+", "-", "=" };
 
-        private List<string> splitString(string input, char c) {
+        private List<string> splitString(string input, string c) {
             List<string> result = new List<string>();
             int index = input.IndexOf(c);
             while (index != -1) {
                 if (index > 0) {
                     result.Add(input.Substring(0, index));
                 }
-                if (c != ' ') {
+                if (c != " ") {
                     result.Add(c.ToString());
                 }
-                input = string.Concat(input.Skip(index + 1));
+                input = string.Concat(input.Skip(index + c.Count()));
                 index = input.IndexOf(c);
             }
             if (input != "") {
@@ -28,7 +28,7 @@ namespace EquationEditor {
             return result;
         }
 
-        private List<string> breakOnChar(List<string> input, char c) {
+        private List<string> breakOnChar(List<string> input, string c) {
             List<string> outputStrings = new List<string>();
             foreach (var s in input) {
                 var split = splitString(s, c);
@@ -40,11 +40,22 @@ namespace EquationEditor {
             return outputStrings;
         }
 
+        private static Dictionary<string, string> stringConversionRules = new Dictionary<string, string>() {
+            {"**", "^"}
+        };
 
+        private string preprocess(string input) {
+            foreach(var s in stringConversionRules){
+                input = input.Replace(s.Key, s.Value);
+            }
+            return input;
+        }
 
         public Queue<IToken> Tokenize(string text) {
+            text = preprocess(text);
+
             List<string> tokenStrings = new List<string>() { text };
-            foreach (char c in breakingChars) {
+            foreach (string c in breakingChars) {
                 tokenStrings = breakOnChar(tokenStrings, c);
             }
             var tokens = tokenStrings.Select(i => TokenLibrary.Create(i)).ToList();

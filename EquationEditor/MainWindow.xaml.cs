@@ -27,7 +27,7 @@ namespace EquationEditor {
             //this.input.Text = @"3 + 4 * ( 3 / 22 - 22) ^ 3 ^4";
             //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))";
             //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))  / 33^3^3^3^3^3^3^3^3^3";
-
+            this.input.Text = "3 ** 4";
 
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
             this.input.BorderBrush = Brushes.Gray;
@@ -37,7 +37,7 @@ namespace EquationEditor {
             this.modules.Add(new InputModules.BlackBox());
 
 
-            //update();
+            update();
         }
 
         private void Update_Click_1(object sender, RoutedEventArgs e) {
