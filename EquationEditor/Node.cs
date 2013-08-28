@@ -74,7 +74,6 @@ namespace EquationEditor {
 
         private FrameworkElement getTextBlock(string text) {
             return new TextBlock() { Text = text, TextAlignment = TextAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
-
         }
     }
 }

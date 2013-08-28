@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,23 +31,36 @@ namespace EquationEditor {
 
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
             this.input.BorderBrush = Brushes.Gray;
-            update();
+            this.modules = new List<IInputModule>();
+            this.modules.Add(new InputModules.EquationEditor());
+            this.modules.Add(new InputModules.IronPython());
+
+            //update();
         }
 
         private void Update_Click_1(object sender, RoutedEventArgs e) {
             update();
         }
 
+        List<IInputModule> modules;
+
         private void update() {
-            ParseTree tree = new ParseTree();
-            Tokenizer tokenizer = new Tokenizer();
-            var queue = tokenizer.Tokenize(this.input.Text);
-            tree.BuildTree(queue);
             int insertIdx = this.resultStack.Children.IndexOf(this.input);
-            var equation = tree.Root.GetElement();
-            equation.Tag = this.input.Text;
-            this.resultStack.Children.Insert(insertIdx, equation);
-            this.input.BorderBrush = Brushes.Gray;
+            //var equation = execute2(this.input.Text);
+            FrameworkElement result = null;
+            foreach (var m in modules) {
+                try {
+                    result = m.Process(this.input.Text);
+                } catch {
+                    
+                }
+                if (result == null) {
+                    result = Util.AsTextBlock(this.input.Text);
+                }
+            }
+
+            result.Tag = this.input.Text;
+            this.resultStack.Children.Insert(insertIdx, result);
             this.input.Text = "";
             this.lineNumber++;
         }
