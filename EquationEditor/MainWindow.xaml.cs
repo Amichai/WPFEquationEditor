@@ -32,8 +32,10 @@ namespace EquationEditor {
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
             this.input.BorderBrush = Brushes.Gray;
             this.modules = new List<IInputModule>();
-            this.modules.Add(new InputModules.EquationEditor());
             this.modules.Add(new InputModules.IronPython());
+            this.modules.Add(new InputModules.EquationEditor());
+            this.modules.Add(new InputModules.BlackBox());
+
 
             //update();
         }
@@ -46,16 +48,16 @@ namespace EquationEditor {
 
         private void update() {
             int insertIdx = this.resultStack.Children.IndexOf(this.input);
-            //var equation = execute2(this.input.Text);
             FrameworkElement result = null;
             foreach (var m in modules) {
                 try {
                     result = m.Process(this.input.Text);
+                    if (result == null) {
+                        result = Util.AsTextBlock(this.input.Text);
+                    }
+                    break;
                 } catch {
                     
-                }
-                if (result == null) {
-                    result = Util.AsTextBlock(this.input.Text);
                 }
             }
 

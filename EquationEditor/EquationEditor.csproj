@@ -80,6 +80,7 @@
     <Compile Include="InputModules\EquationEditor.cs" />
     <Compile Include="InputModules\IInputModule.cs" />
     <Compile Include="InputModules\IronPython.cs" />
+    <Compile Include="InputModules\BlackBox.cs" />
     <Compile Include="Tokens\BreakingChar.cs" />
     <Compile Include="Tokens\Function.cs" />
     <Compile Include="Tokens\IFunction.cs" />
