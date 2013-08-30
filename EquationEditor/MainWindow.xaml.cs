@@ -33,10 +33,10 @@ namespace EquationEditor {
             this.input.BorderBrush = Brushes.Gray;
             this.modules = new List<IInputModule>();
             this.modules.Add(new InputModules.IronPython());
-            this.modules.Add(new InputModules.EquationEditor());
             this.modules.Add(new InputModules.BlackBox());
+            this.modules.Add(new InputModules.EquationEditor());
 
-
+            this.inputStrings = new Stack<string>();
             update();
         }
 
@@ -45,6 +45,7 @@ namespace EquationEditor {
         }
 
         List<IInputModule> modules;
+        ///TODO: preserve original input above the output
 
         private void update() {
             int insertIdx = this.resultStack.Children.IndexOf(this.input);
@@ -57,37 +58,34 @@ namespace EquationEditor {
                     }
                     break;
                 } catch {
-                    
+                    result = Util.AsTextBlock(this.input.Text);
+                    (result as TextBlock).Background = Brushes.Pink;
                 }
             }
 
             result.Tag = this.input.Text;
             this.resultStack.Children.Insert(insertIdx, result);
+            int lineNumber = inputStrings.Count();
+            var inputTextBox = Util.AsTextBlock("  (" + lineNumber.ToString() + ") "+  this.input.Text, HorizontalAlignment.Left);
+            this.resultStack.Children.Insert(insertIdx, inputTextBox);
+            this.inputStrings.Push(this.input.Text);
             this.input.Text = "";
-            this.lineNumber++;
         }
 
-        int lineNumber = 0;
+        Stack<string> inputStrings;
 
-        private void Swap(UIElementCollection col, int idx1, int idx2) {
-            var toTake1 = col[idx1];
-            var toTake2 = col[idx2];
-
-            col.Remove(toTake1);
-            col.Remove(toTake2);
-            col.Insert(idx2, toTake1);
-
-        }
+        ///TODO: visualize the modules in use and offer immediate toggle functionality
 
         private void Window_KeyDown_1(object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.Enter:
                     if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
-                        var text = (this.resultStack.Children[lineNumber - 1] as FrameworkElement).Tag as string;
+                        var text = inputStrings.Pop();
                         this.input.Text = text;
                         this.input.CaretIndex = this.input.Text.Length;
-                        Swap(this.resultStack.Children, lineNumber, lineNumber - 1);
-                        lineNumber--;
+                        int lastIdx = this.resultStack.Children.Count - 1;
+                        this.resultStack.Children.RemoveAt(lastIdx - 1);
+                        this.resultStack.Children.RemoveAt(lastIdx - 2);
                     } else {
                         update();
                     }

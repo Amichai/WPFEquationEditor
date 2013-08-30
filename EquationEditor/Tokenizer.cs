@@ -40,20 +40,7 @@ namespace EquationEditor {
             return outputStrings;
         }
 
-        private static Dictionary<string, string> stringConversionRules = new Dictionary<string, string>() {
-            {"**", "^"}
-        };
-
-        private string preprocess(string input) {
-            foreach(var s in stringConversionRules){
-                input = input.Replace(s.Key, s.Value);
-            }
-            return input;
-        }
-
         public Queue<IToken> Tokenize(string text) {
-            text = preprocess(text);
-
             List<string> tokenStrings = new List<string>() { text };
             foreach (string c in breakingChars) {
                 tokenStrings = breakOnChar(tokenStrings, c);
