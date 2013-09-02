@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="InputModules\Charting.cs" />
+    <Compile Include="InputModules\Drawing.cs" />
     <Compile Include="InputModules\EquationEditor.cs" />
     <Compile Include="InputModules\IInputModule.cs" />
     <Compile Include="InputModules\IronPython.cs" />

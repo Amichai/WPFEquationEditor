@@ -12,11 +12,16 @@
         <Button Click="Button_Click_1" Width="100" HorizontalAlignment="Left" Grid.Row="0">New</Button>
         <ScrollViewer Grid.Row="1">
             <StackPanel >
-                <!--<Grid Name="root"></Grid>-->
                 <ad:DockingManager>
                     <ad:LayoutRoot>
                         <ad:LayoutPanel>
                             <ad:LayoutAnchorablePane x:Name="root">
+                                <!--<ad:LayoutAnchorable>
+                                    <Grid Height="200"></Grid>
+                                </ad:LayoutAnchorable>
+                                <ad:LayoutAnchorable >
+                                    <Grid Height="200"></Grid>
+                                </ad:LayoutAnchorable>-->
                             </ad:LayoutAnchorablePane>
                         </ad:LayoutPanel>
                     </ad:LayoutRoot>

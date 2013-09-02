@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace EquationEditor {
-    interface IInputModule {
+    public interface IInputModule {
         FrameworkElement Process(string input);
     }
 }

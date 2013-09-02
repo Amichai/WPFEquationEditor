@@ -1,5 +1,7 @@
-﻿using System;
+﻿using EquationEditor.InputModules;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,15 +27,13 @@ namespace EquationEditor {
             //this.input.Text = @"3 + 4 * ( 3 / 22 - 22) ^ 3 ^4";
             //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))";
             //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))  / 33^3^3^3^3^3^3^3^3^3";
-            this.input.Text = "3 ** 4";
+            this.input.Text = "Rectangle(10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red);";
+            //this.input.Text = "import scipy";
             
 
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
             this.input.BorderBrush = Brushes.Gray;
-            this.modules = new List<IInputModule>();
-            this.modules.Add(new InputModules.IronPython());
-            this.modules.Add(new InputModules.BlackBox());
-            this.modules.Add(new InputModules.EquationEditor());
+            
 
             this.inputStrings = new Stack<string>();
             update();
@@ -42,20 +42,20 @@ namespace EquationEditor {
             update();
         }
 
-        List<IInputModule> modules;
         ///TODO: preserve original input above the output       
 
         private void update() {
             int insertIdx = this.resultStack.Children.IndexOf(this.input);
             FrameworkElement result = null;
-            foreach (var m in modules) {
+            foreach (var m in MainWindow.Modules) {
                 try {
-                    result = m.Process(this.input.Text);
+                    result = m. Process(this.input.Text);
                     if (result == null) {
                         result = Util.AsTextBlock(this.input.Text);
                     }
                     break;
-                } catch {
+                } catch (Exception ex){
+                    Debug.Print(ex.Message);
                     result = Util.AsTextBlock(this.input.Text);
                     (result as TextBlock).Background = Brushes.Pink;
                 }
