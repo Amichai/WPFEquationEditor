@@ -19,5 +19,9 @@ namespace EquationEditor.Tokens {
         public int NumberOfChildren { get; set; }
         public TokenType Type { get; set; }
         public string Value { get; set; }
+
+        public IToken Clone() {
+            return new InfixOperator(Value, this.Precedence, this.Associativity);
+        }
     }
 }

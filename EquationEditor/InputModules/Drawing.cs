@@ -29,32 +29,26 @@ namespace EquationEditor.InputModules {
         private Shape getShape(string command) {
             Tokenizer t = new Tokenizer();
             var a = t.Tokenize(command);
-            if (a.First().Value == "Rectangle" && a.ElementAt(1).Type == TokenType.number
-                 && a.ElementAt(2).Type == TokenType.number && 
-                 a.ElementAt(3).Type == TokenType.number && 
-                 a.ElementAt(4).Type == TokenType.number) {
-                    return rectangle(a);
-            } else if (a.First().Value == "Ellipse" && a.ElementAt(1).Type == TokenType.number
-                 && a.ElementAt(2).Type == TokenType.number &&
-                 a.ElementAt(3).Type == TokenType.number &&
-                 a.ElementAt(4).Type == TokenType.number) {
-                    return ellipse(a);
-            } else if (a.First().Value == "Line" && a.ElementAt(1).Type == TokenType.number
-                 && a.ElementAt(2).Type == TokenType.number &&
-                 a.ElementAt(3).Type == TokenType.number &&
-                 a.ElementAt(4).Type == TokenType.number) {
-                    return line(a);
+            ParseTree p = new ParseTree();
+            p.BuildTree(a);
+            if(p.Root.Token.Value == "Rectangle") {
+                    return rectangle(p.Root);
+            } else if (p.Root.Token.Value == "Ellipse") {
+                    return ellipse(p.Root);
+            } else if (p.Root.Token.Value == "Line") {
+                    return line(p.Root);
             }
             throw new Exception();
 
         }
 
-        private Shape line(Queue<IToken> a) {
+        private Shape line(Node root) {
             ///TODO: this doesn't work yet
-            double x1 = double.Parse(a.ElementAt(1).Value);
-            double y1 = double.Parse(a.ElementAt(2).Value);
-            double x2 = double.Parse(a.ElementAt(3).Value);
-            double y2 = double.Parse(a.ElementAt(4).Value);
+            int lastIndex = root.Children.Count() - 1;
+            double x1 = double.Parse(root.Children[lastIndex].Token.Value);
+            double y1 = double.Parse(root.Children[lastIndex - 1].Token.Value);
+            double x2 = double.Parse(root.Children[lastIndex - 2].Token.Value);
+            double y2 = double.Parse(root.Children[lastIndex - 3].Token.Value);
             var width = Math.Max(x2,x1);
             var height = Math.Max(y2, y1);
             Line l = new Line() { X1 = x1, Y1 = height - y1, X2 = x2, Y2 = height - y2 };
@@ -65,23 +59,24 @@ namespace EquationEditor.InputModules {
             l.StrokeThickness = 2;
             updateMaxWidthAndHeight(width, height);
 
-            if (a.Count() > 5) {
-                var t = double.Parse(a.ElementAt(5).Value);
+            if (root.Children.Count() > 4) {
+                var t = double.Parse(root.Children[lastIndex - 4].Token.Value);
                 l.StrokeThickness = t;
             }
-            if (a.Count() > 6) {
-                var colorName = a.ElementAt(6).Value;
+            if (root.Children.Count() > 5) {
+                var colorName = root.Children[lastIndex - 5].Token.Value;
                 var color = (Color)ColorConverter.ConvertFromString(colorName);
                 l.Stroke = new SolidColorBrush(color);
             }
             return l;
         }
 
-        private Shape ellipse(Queue<IToken> a) {
-            double x = double.Parse(a.ElementAt(1).Value);
-            double y = double.Parse(a.ElementAt(2).Value);
-            double w = double.Parse(a.ElementAt(3).Value);
-            double h = double.Parse(a.ElementAt(4).Value);
+        private Shape ellipse(Node root) {
+            int lastIndex = root.Children.Count() - 1;
+            double x = double.Parse(root.Children[lastIndex].Token.Value);
+            double y = double.Parse(root.Children[lastIndex - 1].Token.Value);
+            double w = double.Parse(root.Children[lastIndex - 2].Token.Value);
+            double h = double.Parse(root.Children[lastIndex - 3].Token.Value);
 
             Ellipse r = new Ellipse() { Width = w, Height = h };
             r.Fill = Brushes.Black;
@@ -93,19 +88,20 @@ namespace EquationEditor.InputModules {
             updateMaxWidthAndHeight(width, height);
 
 
-            if (a.Count() > 5) {
-                var colorName = a.ElementAt(5).Value;
+            if (root.Children.Count() > 4) {
+                var colorName = root.Children[lastIndex - 4].Token.Value;
                 var color = (Color)ColorConverter.ConvertFromString(colorName);
                 r.Fill = new SolidColorBrush(color);
             }
             return r;
         }
 
-        private Shape rectangle(Queue<IToken> a) {
-            double x = double.Parse(a.ElementAt(1).Value);
-            double y = double.Parse(a.ElementAt(2).Value);
-            double w = double.Parse(a.ElementAt(3).Value);
-            double h = double.Parse(a.ElementAt(4).Value);
+        private Shape rectangle(Node root) {
+            int lastIndex = root.Children.Count() - 1;
+            double x = double.Parse(root.Children[lastIndex].Token.Value);
+            double y = double.Parse(root.Children[lastIndex - 1].Token.Value);
+            double w = double.Parse(root.Children[lastIndex - 2].Token.Value);
+            double h = double.Parse(root.Children[lastIndex - 3].Token.Value);
 
             Rectangle r = new Rectangle() { Width = w, Height = h };
             r.Fill = Brushes.Black;
@@ -116,8 +112,8 @@ namespace EquationEditor.InputModules {
             updateMaxWidthAndHeight(width, height);
 
 
-            if (a.Count() > 5) {
-                var colorName = a.ElementAt(5).Value;
+            if (root.Children.Count() > 4) {
+                var colorName = root.Children[lastIndex - 4].Token.Value;
                 var color = (Color)ColorConverter.ConvertFromString(colorName);
                 r.Fill = new SolidColorBrush(color);
             }

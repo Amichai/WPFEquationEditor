@@ -21,14 +21,19 @@ namespace EquationEditor {
             { ";", new BreakingChar(";")},
             { "(", new BreakingChar("(")},
             { ")", new BreakingChar(")")},
-            { "add", new Function("add", 2)},
-            { "sum", new Function("sum", 2)},
+            { "add", new Function("add")},
+            { "sum", new Function("sum")},
+            { "Line", new Function("Line")},
+            { "Rectangle", new Function("Rectangle")},
+            { "Ellipse", new Function("Ellipse")},
+            { "Negate", new Function("Negate")},
+
         };
 
         public static IToken Create(string t) {
             //Check if it is a number
             if (tokens.ContainsKey(t)) {
-                return tokens[t];
+                return tokens[t].Clone();
             } else {
                 double result;
                 if (double.TryParse(t, out result)) {

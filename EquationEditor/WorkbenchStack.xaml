@@ -7,7 +7,7 @@
              KeyDown="Window_KeyDown_1">
     <Grid>
             <StackPanel Name="resultStack" >
-                <TextBox Name="input" Margin="10" PreviewKeyDown="TextBox_KeyDown"></TextBox>
+                <TextBox Name="input" Margin="10" PreviewKeyDown="TextBox_KeyDown" AcceptsReturn="True" AcceptsTab="True"></TextBox>
             </StackPanel>
     </Grid>
 </UserControl>

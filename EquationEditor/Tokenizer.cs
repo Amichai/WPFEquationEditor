@@ -40,7 +40,7 @@ namespace EquationEditor {
             return outputStrings;
         }
 
-        public Queue<IToken> Tokenize(string text) {
+        public List<IToken> Tokenize(string text) {
             List<string> tokenStrings = new List<string>() { text };
             foreach (string c in breakingChars) {
                 tokenStrings = breakOnChar(tokenStrings, c);
@@ -50,13 +50,15 @@ namespace EquationEditor {
             return ConvertToPostfixed(tokens);
         }
 
-        private static Queue<IToken> ConvertToPostfixed(List<IToken> tokens) {
-            Queue<IToken> postFixed = new Queue<IToken>();
+        private IToken lastToken;
+
+        private List<IToken> ConvertToPostfixed(List<IToken> tokens) {
+            List<IToken> postFixed = new List<IToken>();
             Stack<IToken> operatorStack = new Stack<IToken>();
             foreach (var token in tokens) { 
                 switch (token.Type) {
                     case TokenType.number:
-                         postFixed.Enqueue(token);
+                         postFixed.Add(token);
                         break;
                     case TokenType.function:
                         operatorStack.Push(token);
@@ -67,8 +69,15 @@ namespace EquationEditor {
                                 throw new Exception("Comma and no arg");
                             }
                             while (operatorStack.Peek().Value != "(") {
-                                postFixed.Enqueue(operatorStack.Pop());
+                                postFixed.Add(operatorStack.Pop());
                             }
+                            int stackPos;
+                            for(stackPos = operatorStack.Count() - 1; stackPos >= 0; stackPos--){
+                                if(operatorStack.ElementAt(stackPos).Value == "("){
+                                    break;
+                                }
+                            }
+                            operatorStack.ElementAt(stackPos + 1).NumberOfChildren++;
                         } else if (token.Value == "(") {
                             operatorStack.Push(token);
                             break;
@@ -77,24 +86,30 @@ namespace EquationEditor {
                                 throw new Exception("Mismatched parenthesis");
                             }
                             while (operatorStack.Peek().Value != "(") {
-                                postFixed.Enqueue(operatorStack.Pop());
+                                postFixed.Add(operatorStack.Pop());
                             }
                             operatorStack.Pop();
                         }
                         break;
                     case TokenType.infixOperator:
+                        if (token.Value == "-" && lastToken != null && (breakingChars.Contains(lastToken.Value))) {
+                            //operatorStack.Push() ///push a single valued negation function
+                            postFixed.Add(new Function("Negate") { NumberOfChildren = 1 });
+                            break;
+                        }
+
                         var asInfix = token as InfixOperator;
                         while (operatorStack.Count() > 0 ){
                             if (operatorStack.Peek() is InfixOperator) {
                                 var toPopAndAdd = operatorStack.Peek() as InfixOperator;
                                 if ((asInfix.Associativity == Associativity.left && asInfix.Precedence == toPopAndAdd.Precedence)
                                     || asInfix.Precedence < toPopAndAdd.Precedence) {
-                                    postFixed.Enqueue(operatorStack.Pop());
+                                    postFixed.Add(operatorStack.Pop());
                                 } else {
                                     break;
                                 }
                             } else if (operatorStack.Peek() is IFunction) {
-                                postFixed.Enqueue(operatorStack.Pop());
+                                postFixed.Add(operatorStack.Pop());
                             } else {
                                 break;
                             }
@@ -102,19 +117,30 @@ namespace EquationEditor {
                         operatorStack.Push(token);
                         break;
                     case TokenType.keyword:
-                        postFixed.Enqueue(token);
+                        postFixed.Add(token);
                         break;
                     default:
                         throw new Exception();
                 }
+                this.lastToken = token;
             }
             while (operatorStack.Count() > 0) {
-                postFixed.Enqueue(operatorStack.Pop());
+                postFixed.Add(operatorStack.Pop());
             }
             if (postFixed.Where(i => i.Value == " ").Count() > 0) {
                 throw new Exception();
             }
-
+            for (int i = 0; i < postFixed.Count() - 1; i++) {
+                var thisToken = postFixed.ElementAt(i);
+                var nextToken = postFixed.ElementAt(i + 1);
+                if (i < postFixed.Count() - 1 && thisToken.Value == "Negate" && nextToken.Type == TokenType.number) {
+                    var newVal = (nextToken as Number).numericalVal * -1;
+                    nextToken.Value = newVal.ToString();
+                    postFixed.RemoveAt(i);
+                    ///Remove the thisToken
+                    ///update the indices
+                }
+            }
             return postFixed;
         }
     }

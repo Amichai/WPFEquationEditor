@@ -30,9 +30,9 @@ namespace EquationEditor {
             //this.input.Text = "Rectangle(10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red);";
             ///TODO: negative numbers don't work yet. Known issue:
             //this.input.Text = "Ellipse(-10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red)";
-            this.input.Text = "Line(10,20, 200, 40, 3)";
-            ///Polygon, line
-            //this.input.Text = "import scipy";
+            this.input.Text = "Line(-10,20, 200, 40, 3)";
+            ///TODO: Polygon
+            //this.input.Text = "import scipy"
             
 
             this.input.BorderThickness = new Thickness(1, 1, 1, 1);
@@ -54,6 +54,7 @@ namespace EquationEditor {
             foreach (var m in MainWindow.Modules) {
                 try {
                     result = m. Process(this.input.Text);
+                    ///TODO: we should get rid of this.
                     if (result == null) {
                         result = Util.AsTextBlock(this.input.Text);
                     }
@@ -79,17 +80,20 @@ namespace EquationEditor {
         ///TODO: visualize the modules in use and offer immediate toggle functionality
 
         private void Window_KeyDown_1(object sender, KeyEventArgs e) {
-            switch (e.Key) {
-                case Key.Enter:
-                    update();
-                    break;
-            }
+            //switch (e.Key) {
+            //    case Key.Enter:
+            //        update();
+            //        break;
+            //}
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.Up:
                     if (inputStrings.Count() == 0) {
+                        return;
+                    }
+                    if (this.input.CaretIndex != this.input.Text.Length) {
                         return;
                     }
                     var text = inputStrings.Pop();
@@ -100,6 +104,9 @@ namespace EquationEditor {
                     this.resultStack.Children.RemoveAt(lastIdx - 2);
                     break;
                 case Key.Down:
+                    if (this.input.CaretIndex != this.input.Text.Length) {
+                        return;
+                    }
                     update();
                     break;
             }

@@ -15,5 +15,9 @@ namespace EquationEditor.Tokens {
         public TokenType Type { get; set; }
 
         public string Value { get; set; }
+
+        public IToken Clone() {
+            return new Keyword(Value) { NumberOfChildren = this.NumberOfChildren };
+        }
     }
 }

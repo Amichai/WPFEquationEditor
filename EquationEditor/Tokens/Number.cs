@@ -18,5 +18,9 @@ namespace EquationEditor.Tokens {
         public TokenType Type { get; set; }
 
         public string Value { get; set; }
+
+        public IToken Clone() {
+            return new Number(Value, numericalVal) { NumberOfChildren = this.NumberOfChildren };
+        }
     }
 }
