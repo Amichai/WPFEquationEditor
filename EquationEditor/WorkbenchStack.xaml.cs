@@ -27,7 +27,11 @@ namespace EquationEditor {
             //this.input.Text = @"3 + 4 * ( 3 / 22 - 22) ^ 3 ^4";
             //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))";
             //this.input.Text = @"4 * 22 = (34 / (3 + 33 + 2^3^3))  / 33^3^3^3^3^3^3^3^3^3";
-            this.input.Text = "Rectangle(10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red);";
+            //this.input.Text = "Rectangle(10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red);";
+            ///TODO: negative numbers don't work yet. Known issue:
+            //this.input.Text = "Ellipse(-10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red)";
+            this.input.Text = "Line(10,20, 200, 40, 3)";
+            ///Polygon, line
             //this.input.Text = "import scipy";
             
 
