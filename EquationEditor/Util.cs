@@ -8,8 +8,8 @@ using System.Windows.Controls;
 
 namespace EquationEditor {
     class Util {
-        public static FrameworkElement AsTextBlock(string text, HorizontalAlignment alignment = HorizontalAlignment.Center) {
-            return new TextBlock() { Text = text, TextAlignment = TextAlignment.Center, 
+        public static FrameworkElement AsTextBlock(string text, HorizontalAlignment alignment = HorizontalAlignment.Center, TextAlignment textAlignment = TextAlignment.Center) {
+            return new TextBlock() { Text = text, TextAlignment = textAlignment, 
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 TextWrapping = System.Windows.TextWrapping.Wrap,
                 HorizontalAlignment = alignment};

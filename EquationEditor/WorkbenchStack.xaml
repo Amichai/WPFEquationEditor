@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              KeyDown="Window_KeyDown_1">
-    <Grid>
+        <Grid>
             <StackPanel Name="resultStack" >
                 <TextBox Name="input" Margin="10" PreviewKeyDown="TextBox_KeyDown" AcceptsReturn="True" AcceptsTab="True"></TextBox>
             </StackPanel>

@@ -129,8 +129,11 @@ namespace EquationEditor.InputModules {
             }
             c.Width = maxWidth;
             c.Height = maxHeight;
+            c.Background = Brushes.White;
             return c;
         }
+
+        ///TODO: Axis() should draw an x-y axis
 
         private Canvas intialize() {
             Canvas c = new Canvas() { HorizontalAlignment = HorizontalAlignment.Left };

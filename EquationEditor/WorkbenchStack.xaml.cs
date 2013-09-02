@@ -30,7 +30,8 @@ namespace EquationEditor {
             //this.input.Text = "Rectangle(10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red);";
             ///TODO: negative numbers don't work yet. Known issue:
             //this.input.Text = "Ellipse(-10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red)";
-            this.input.Text = "Line(-10,20, 200, 40, 3)";
+            //this.input.Text = "Line(-10,20, 200, 40, 3)";
+            this.input.Text = @"eq: \vec{r}(t) = \hat{i} b t + \hat{j} \left( c t - \frac{g t^2}{2} \right) + \hat{k} 0";
             ///TODO: Polygon
             //this.input.Text = "import scipy"
             
@@ -42,34 +43,52 @@ namespace EquationEditor {
             this.inputStrings = new Stack<string>();
             update();
         }
+
+
         private void Update_Click_1(object sender, RoutedEventArgs e) {
             update();
         }
 
-        ///TODO: preserve original input above the output       
+        private List<IInputModule> GetModulesToTest(string input, out string adjustedInput){            
+            adjustedInput = input;
+            if (string.Concat(input.Take(3)) == "eq:") {
+                adjustedInput = string.Concat(input.Skip(3));
+                return new List<IInputModule>() { new LatexParser() };
+            } else {
+                return MainWindow.Modules;
+            }
+            throw new NotImplementedException();
+        }
 
         private void update() {
-            int insertIdx = this.resultStack.Children.IndexOf(this.input);
+
+            string adjustedInput;
+            var modulesToTest = GetModulesToTest(this.input.Text, out adjustedInput);            
+
             FrameworkElement result = null;
-            foreach (var m in MainWindow.Modules) {
+            foreach (var m in modulesToTest) {
                 try {
-                    result = m. Process(this.input.Text);
+                    result = m.Process(adjustedInput);
+                    MainWindow.SetContextMenu(result);
                     ///TODO: we should get rid of this.
                     if (result == null) {
-                        result = Util.AsTextBlock(this.input.Text);
+                        result = Util.AsTextBlock(adjustedInput);
                     }
                     break;
                 } catch (Exception ex){
                     Debug.Print(ex.Message);
-                    result = Util.AsTextBlock(this.input.Text);
+                    result = Util.AsTextBlock(adjustedInput);
                     (result as TextBlock).Background = Brushes.Pink;
                 }
             }
 
-            result.Tag = this.input.Text;
+            ///Getting the index of the text block not the text itself:
+            int insertIdx = this.resultStack.Children.IndexOf(this.input);
+            //result.Tag = this.input.Text;
             this.resultStack.Children.Insert(insertIdx, result);
             int lineNumber = inputStrings.Count();
-            var inputTextBox = Util.AsTextBlock("  (" + lineNumber.ToString() + ") " + this.input.Text, HorizontalAlignment.Left);
+            var inputTextBox = Util.AsTextBlock("  (" + lineNumber.ToString() + ") " + this.input.Text, HorizontalAlignment.Left, TextAlignment.Left);
+            MainWindow.SetContextMenu(inputTextBox);
             this.resultStack.Children.Insert(insertIdx, inputTextBox);
             this.inputStrings.Push(this.input.Text);
             this.input.Text = "";
@@ -88,14 +107,18 @@ namespace EquationEditor {
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e) {
+            ///TODO: this would be a lot nicer with reactive extensions
             switch (e.Key) {
                 case Key.Up:
                     if (inputStrings.Count() == 0) {
                         return;
                     }
-                    if (this.input.CaretIndex != this.input.Text.Length) {
+                    if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)) {
                         return;
                     }
+                    //if (this.input.CaretIndex != this.input.Text.Length) {
+                    //    return;
+                    //}
                     var text = inputStrings.Pop();
                     this.input.Text = text;
                     this.input.CaretIndex = this.input.Text.Length;
@@ -104,6 +127,9 @@ namespace EquationEditor {
                     this.resultStack.Children.RemoveAt(lastIdx - 2);
                     break;
                 case Key.Down:
+                    if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)) {
+                        return;
+                    }
                     if (this.input.CaretIndex != this.input.Text.Length) {
                         return;
                     }

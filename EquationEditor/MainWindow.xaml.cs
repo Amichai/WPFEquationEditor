@@ -30,11 +30,48 @@ namespace EquationEditor {
             ///Modules: python, drawing, charting, equation editing
             ///File reading input output functionality, api integration
 
-            //Modules.Add(new InputModules.IronPython());
+            Modules.Add(new InputModules.IronPython());
             //Modules.Add(new InputModules.BlackBox());
             //Modules.Add(new InputModules.EquationEditor());
             Modules.Add(new DrawingModule());
             Modules.Add(new XamlParser());
+            //Modules.Add(new LatexParser());
+
+
+        }
+
+        public static void SetContextMenu(FrameworkElement control){
+            ContextMenu contextMenu = new ContextMenu();
+            var copy = new MenuItem() { Header = "Copy" };
+            copy.Click += (s, e) => {
+                var element = ((s as MenuItem).Parent as ContextMenu).Tag as FrameworkElement;
+                double width = element.ActualWidth;
+                double height = element.ActualHeight;
+                RenderTargetBitmap bmpCopied = new RenderTargetBitmap((int)Math.Round(width), (int)Math.Round(height), 96, 96, PixelFormats.Default);
+                DrawingVisual dv = new DrawingVisual();
+                using (DrawingContext dc = dv.RenderOpen()) {
+                    VisualBrush vb = new VisualBrush(element);
+                    dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(width, height)));
+                }
+                bmpCopied.Render(dv);
+                Clipboard.SetImage(bmpCopied);
+            };
+            //var hide = new MenuItem() { Header = "Hide" };
+            //hide.Click += (s, e) => {
+            //    var element = ((s as MenuItem).Parent as ContextMenu).Tag as FrameworkElement;
+            //    element.Visibility = Visibility.Collapsed;
+            //};
+            var delete = new MenuItem() { Header = "Delete" };
+            delete.Click += (s, e) => {
+                var element = ((s as MenuItem).Parent as ContextMenu).Tag as FrameworkElement;
+                element.Visibility = Visibility.Collapsed;
+            };
+
+            contextMenu.Items.Add(copy);
+            //contextMenu.Items.Add(hide);
+            contextMenu.Items.Add(delete);
+            contextMenu.Tag = control;
+            control.ContextMenu = contextMenu;
         }
 
         ///TODO: append modules to the bottom of an existing pad

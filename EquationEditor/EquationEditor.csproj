@@ -100,6 +100,7 @@
     <Compile Include="InputModules\IInputModule.cs" />
     <Compile Include="InputModules\IronPython.cs" />
     <Compile Include="InputModules\BlackBox.cs" />
+    <Compile Include="InputModules\LatexParser.cs" />
     <Compile Include="InputModules\XamlParser.cs" />
     <Compile Include="Tokens\BreakingChar.cs" />
     <Compile Include="Tokens\Function.cs" />
