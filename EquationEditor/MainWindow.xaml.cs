@@ -36,9 +36,17 @@ namespace EquationEditor {
             Modules.Add(new DrawingModule());
             Modules.Add(new XamlParser());
             //Modules.Add(new LatexParser());
-
-
+            this.fontSizeSelection.SelectionChanged += (s, e) => {
+                WorkbenchStack.SelectedFontSize = double.Parse((this.fontSizeSelection.SelectedValue as ComboBoxItem).Content as string);
+            };
         }
+
+        public double SelectedFontSize {
+            get {
+                return (double)this.fontSizeSelection.SelectedValue;
+            }
+        }
+
 
         public static void SetContextMenu(FrameworkElement control){
             ContextMenu contextMenu = new ContextMenu();

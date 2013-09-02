@@ -31,7 +31,7 @@ namespace EquationEditor {
             ///TODO: negative numbers don't work yet. Known issue:
             //this.input.Text = "Ellipse(-10,20, 200, 40, Green);Rectangle(10,0, 10, 40, Red)";
             //this.input.Text = "Line(-10,20, 200, 40, 3)";
-            this.input.Text = @"eq: \vec{r}(t) = \hat{i} b t + \hat{j} \left( c t - \frac{g t^2}{2} \right) + \hat{k} 0";
+            this.input.Text = @"tex: \vec{r}(t) = \hat{i} b t + \hat{j} \left( c t - \frac{g t^2}{2} \right) + \hat{k} 0";
             ///TODO: Polygon
             //this.input.Text = "import scipy"
             
@@ -44,6 +44,7 @@ namespace EquationEditor {
             update();
         }
 
+        public static double SelectedFontSize = 12;
 
         private void Update_Click_1(object sender, RoutedEventArgs e) {
             update();
@@ -51,8 +52,9 @@ namespace EquationEditor {
 
         private List<IInputModule> GetModulesToTest(string input, out string adjustedInput){            
             adjustedInput = input;
-            if (string.Concat(input.Take(3)) == "eq:") {
-                adjustedInput = string.Concat(input.Skip(3));
+            string keyword = "tex:";
+            if (string.Concat(input.Take(keyword.Count())) == keyword) {
+                adjustedInput = string.Concat(input.Skip(keyword.Count()));
                 return new List<IInputModule>() { new LatexParser() };
             } else {
                 return MainWindow.Modules;
@@ -72,12 +74,12 @@ namespace EquationEditor {
                     MainWindow.SetContextMenu(result);
                     ///TODO: we should get rid of this.
                     if (result == null) {
-                        result = Util.AsTextBlock(adjustedInput);
+                        result = Util.AsTextBlock(adjustedInput, SelectedFontSize);
                     }
                     break;
                 } catch (Exception ex){
                     Debug.Print(ex.Message);
-                    result = Util.AsTextBlock(adjustedInput);
+                    result = Util.AsTextBlock(adjustedInput, SelectedFontSize);
                     (result as TextBlock).Background = Brushes.Pink;
                 }
             }
@@ -87,7 +89,7 @@ namespace EquationEditor {
             //result.Tag = this.input.Text;
             this.resultStack.Children.Insert(insertIdx, result);
             int lineNumber = inputStrings.Count();
-            var inputTextBox = Util.AsTextBlock("  (" + lineNumber.ToString() + ") " + this.input.Text, HorizontalAlignment.Left, TextAlignment.Left);
+            var inputTextBox = Util.AsTextBlock("  (" + lineNumber.ToString() + ") " + this.input.Text, SelectedFontSize, HorizontalAlignment.Left, TextAlignment.Left);
             MainWindow.SetContextMenu(inputTextBox);
             this.resultStack.Children.Insert(insertIdx, inputTextBox);
             this.inputStrings.Push(this.input.Text);

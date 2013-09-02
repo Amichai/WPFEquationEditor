@@ -54,7 +54,7 @@ from numpy import *
 
             if (result != null) {
                 //engine.Execute("ans = " + result, scope);
-                return Util.AsTextBlock(result.ToString());
+                return Util.AsTextBlock(result.ToString(), WorkbenchStack.SelectedFontSize);
             }
             return null;
         }

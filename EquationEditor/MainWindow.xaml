@@ -9,7 +9,20 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Click="Button_Click_1" Width="100" HorizontalAlignment="Left" Grid.Row="0">New</Button>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Click="Button_Click_1" Width="100" HorizontalAlignment="Left" >New</Button>
+            <Label>Font Size:</Label>
+            <ComboBox IsEditable="True" Name="fontSizeSelection">
+                <ComboBoxItem>10</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">12</ComboBoxItem>
+                <ComboBoxItem>14</ComboBoxItem>
+                <ComboBoxItem>16</ComboBoxItem>
+                <ComboBoxItem>18</ComboBoxItem>
+                <ComboBoxItem>20</ComboBoxItem>
+                <ComboBoxItem>25</ComboBoxItem>
+                <ComboBoxItem>30</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
         <ScrollViewer Grid.Row="1">
             <StackPanel >
                 <ad:DockingManager>
