@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace EquationEditor.InputModules {
-    class Charting : IInputModule {
+    public class Charting : IInputModule {
         ScriptEngine engine;
         ScriptScope scope;
         public Charting() {
@@ -37,6 +37,11 @@ namespace EquationEditor.InputModules {
             for (int i = 0; i < 101; i++) {
                 //values[i] = function(minInputX + step * i);
             }
+            throw new NotImplementedException();
+        }
+
+
+        public string ForHtml(string input) {
             throw new NotImplementedException();
         }
     }

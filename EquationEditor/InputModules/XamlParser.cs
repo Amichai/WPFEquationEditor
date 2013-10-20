@@ -15,5 +15,10 @@ namespace EquationEditor.InputModules {
             XmlReader reader = XmlReader.Create(sr);
             return XamlReader.Load(reader) as FrameworkElement;
         }
+
+
+        public string ForHtml(string input) {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,3 +8,5 @@ TestResults/EquationEditor.TE.Tests_log.ldf
 TestResults/
 TestResults/
 packages/
+Workbench/bin/Debug/
+Workbench/obj/

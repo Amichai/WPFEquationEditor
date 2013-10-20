@@ -8,5 +8,6 @@ using System.Windows;
 namespace EquationEditor {
     public interface IInputModule {
         FrameworkElement Process(string input);
+        string ForHtml(string input);
     }
 }

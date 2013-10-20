@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace EquationEditor.InputModules {
-    class BlackBox : IInputModule{
+    public class BlackBox : IInputModule{
         public FrameworkElement Process(string input) {
             if (input == "black box") {
                 return new Rectangle() { Width = 220, Height = 40, Fill = Brushes.Blue, Margin = new Thickness(10,10,10,10) };
@@ -27,6 +27,11 @@ namespace EquationEditor.InputModules {
                 return myImage3;
             }
             throw new Exception();
+        }
+
+
+        public string ForHtml(string input) {
+            throw new NotImplementedException();
         }
     }
 }

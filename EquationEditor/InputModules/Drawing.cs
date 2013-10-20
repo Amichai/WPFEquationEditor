@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace EquationEditor.InputModules {
-    class DrawingModule : IInputModule {
+    public class DrawingModule : IInputModule {
         public DrawingModule() {
         }
 
@@ -141,6 +141,11 @@ namespace EquationEditor.InputModules {
             this.maxWidth = 0;
             this.maxHeight = 0;
             return c;
+        }
+
+
+        public string ForHtml(string input) {
+            throw new NotImplementedException();
         }
     }
 }
