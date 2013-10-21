@@ -10,3 +10,5 @@ TestResults/
 packages/
 Workbench/bin/Debug/
 Workbench/obj/
+Workbench.Lib/bin
+Workbench.Lib/obj/

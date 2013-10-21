@@ -49,7 +49,7 @@ namespace Workbench.Controls {
 
         public string Result {
             get {
-                return this.result.Text;
+                return this.textResult.Text;
             }
         }
 
@@ -69,18 +69,29 @@ namespace Workbench.Controls {
             this.SetFocus();
         }
 
-        internal void SetResult(string result) {
+        private void stringResult(string result) {
             if (result == "") {
                 return;
             }
-            this.result.Text = result;
+            this.textResult.Text = result;
             this.delResult.Visibility = Visibility.Visible;
-            this.result.Visibility = Visibility.Visible;
+            this.textResult.Visibility = Visibility.Visible;
+        }
+
+        internal void SetResult(object result) {
+            if (result is string) {
+                var asString = result as string;
+                stringResult(asString);
+            } else if (result is UIElement) {
+                this.UIResult.Children.Add(result as UIElement);
+            } else {
+                stringResult(result.ToString());
+            }
         }
 
         public void ClearResult() {
             this.delResult.Visibility = Visibility.Collapsed;
-            this.result.Visibility = Visibility.Collapsed;
+            this.textResult.Visibility = Visibility.Collapsed;
         }
 
         private void delResult_Click_1(object sender, RoutedEventArgs e) {
