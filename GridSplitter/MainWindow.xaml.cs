@@ -18,12 +18,16 @@ namespace GridSplitter {
         public MainWindow() {
             InitializeComponent();
 
-            _smartGrid.Add(new TextBlock() { Text = "AAA" });
+            _smartGrid.Add(new TextBox() { Text = "AAA" });
+            //_smartGrid.Add(new TextBox() { Text = "" });
+
             _smartGrid.Add(new TextBlock() { Text = "BBB" });
             _smartGrid.Add(new TextBlock() { Text = "CCC" });
             _smartGrid.Add(new TextBlock() { Text = "DDD" });
             _smartGrid.Add(new TextBlock() { Text = "EEE" });
+        
             _smartGrid.Add(new TextBlock() { Text = "FFF" });
+
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e) {

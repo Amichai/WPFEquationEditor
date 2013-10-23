@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Methods>
+  <Method className="test" returnType="double" signature="sin(double i)" body="Math.Sin(i)" />
+  <Method className="test" returnType="double" signature="cos(double i)" body="Math.Cos(i)" />
+</Methods>

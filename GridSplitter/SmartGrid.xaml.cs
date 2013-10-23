@@ -19,67 +19,60 @@ namespace GridSplitter {
             InitializeComponent();
         }
 
-        public void Add(UIElement child) {
-            int rowIndex = _grid.RowDefinitions.Count();
+        private List<FrameworkElement> elements = new List<FrameworkElement>();
 
-            _grid.RowDefinitions.Add(
-                new RowDefinition() {
-                    Height = new GridLength(rowIndex == 0 ? 0 : 5)
-                });
+        private void Rebuild() {
+            _grid.RowDefinitions.Clear();
+            _grid.Children.Clear();
+
+            int elementCount = elements.Count();
+            for (int i = 0; i < elementCount * 2; i += 2) {
+                var e = elements.ElementAt(i / 2);
+                addControl(i, e);
+            }
+            var toAdd = new Grid();
+            addControl(elementCount * 2, toAdd);
+        }
+
+        private void addControl(int i, FrameworkElement child) {
+            _grid.RowDefinitions.Add(new RowDefinition() {
+                Height = new GridLength(5)
+            });
+
+            GridLength length;
+            double height = child.ActualHeight;
+            if (height == 0 || double.IsNaN(height)) {
+                length = GridLength.Auto;
+            } else {
+                length = new GridLength(height);
+            }
+            _grid.RowDefinitions.Add(new RowDefinition() {
+                Height = length
+            });
+
 
             System.Windows.Controls.GridSplitter gridSplitter =
-                new System.Windows.Controls.GridSplitter() {
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                    ResizeDirection = GridResizeDirection.Rows,
-                    Background = Brushes.Black
-                };
+            new System.Windows.Controls.GridSplitter() {
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                ResizeDirection = GridResizeDirection.Rows,
+                Background = Brushes.Black,
+                Tag = child
+            };
 
             _grid.Children.Add(gridSplitter);
-            Grid.SetRow(gridSplitter, rowIndex);
+            Grid.SetRow(gridSplitter, i);
             Grid.SetColumn(gridSplitter, 0);
             Grid.SetColumnSpan(gridSplitter, 2);
 
-            rowIndex++;
-
-            _grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-
-            Button button = new Button();
-            button.Content = "Delete";
-            button.Tag = new TagTuple() { Child = child, GridSplitter = gridSplitter };
-            button.Click += new RoutedEventHandler(DeleteButton_Click);
-
-            _grid.Children.Add(button);
-            Grid.SetRow(button, rowIndex);
-            Grid.SetColumn(button, 0);
-
             _grid.Children.Add(child);
-            Grid.SetRow(child, rowIndex);
+            Grid.SetRow(child, i + 1);
             Grid.SetColumn(child, 1);
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e) {
-            Button button = sender as Button;
-            int columnIndex = Grid.GetRow(button);
-            TagTuple tagTuple = button.Tag as TagTuple;
-            _grid.Children.Remove(tagTuple.GridSplitter);
-            _grid.Children.Remove(tagTuple.Child);
-            _grid.Children.Remove(button as UIElement);
-
-            _grid.RowDefinitions.RemoveAt(_grid.RowDefinitions.Count() - 1);
-            _grid.RowDefinitions.RemoveAt(_grid.RowDefinitions.Count() - 1);
-
-            foreach (UIElement child in _grid.Children) {
-                int rowIndexForChild = Grid.GetRow(child);
-                if (rowIndexForChild > columnIndex) {
-                    Grid.SetRow(child, rowIndexForChild - 2);
-                }
-            }
-        }
-
-        private class TagTuple {
-            public System.Windows.Controls.GridSplitter GridSplitter { get; set; }
-            public UIElement Child { get; set; }
+        public void Add(FrameworkElement child) {
+            elements.Add(child);
+            this.Rebuild();
         }
     }
 }
