@@ -37,5 +37,12 @@ namespace Workbench.Lib
             streamResponse.Close();
             return content;
         }
+
+        ///TODO: test our ability to run queries on xml, etc.
+
+        public static object XMLLoad(string url){
+            var content = Url.Load(url);
+            return Data.Format(content);
+        }
     }
 }

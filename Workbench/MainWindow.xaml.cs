@@ -26,6 +26,10 @@ namespace Workbench {
             InitializeComponent();
             CSharp = new CSharpEngine();
             AppendNewLine();
+            Observable.FromEventPattern(this, "PreviewMouseDown").Subscribe(e => {
+                setFocus();
+            });
+            
             setFocus();
         }
 
@@ -81,6 +85,9 @@ namespace Workbench {
                     return;
                 }
                 selectedIndex--;
+                if (selectedIndex > this.allLines.Children.Count - 1) {
+                    return;
+                }
                 setTextFromIndex(selectedIndex);
             } else if (e.Key == Key.Down) {
                 if (selectedIndex > this.allLines.Children.Count - 2) {

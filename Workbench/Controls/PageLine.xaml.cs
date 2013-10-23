@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace Workbench.Controls {
             if (result == "") {
                 return;
             }
-            this.textResult.Text = result;
+            this.textResult.Text += result + "\n";
             this.delResult.Visibility = Visibility.Visible;
             this.textResult.Visibility = Visibility.Visible;
         }
@@ -84,10 +85,16 @@ namespace Workbench.Controls {
                 stringResult(asString);
             } else if (result is UIElement) {
                 this.UIResult.Children.Add(result as UIElement);
+            } else if (result is IEnumerable) {
+                foreach (var r in (result as IEnumerable)) {
+                    SetResult(r);
+                }
             } else {
                 stringResult(result.ToString());
             }
         }
+
+        ///TODO: implement chart resize functionality
 
         public void ClearResult() {
             this.delResult.Visibility = Visibility.Collapsed;

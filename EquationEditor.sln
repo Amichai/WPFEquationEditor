@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workbench", "Workbench\Work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workbench.Lib", "Workbench.Lib\Workbench.Lib.csproj", "{7EEAB055-4415-4339-BBC9-B6422B01E659}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridSplitter", "GridSplitter\GridSplitter.csproj", "{4B9E3965-90A1-4468-BF94-5972C417FF52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,16 @@ Global
 		{7EEAB055-4415-4339-BBC9-B6422B01E659}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7EEAB055-4415-4339-BBC9-B6422B01E659}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7EEAB055-4415-4339-BBC9-B6422B01E659}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4B9E3965-90A1-4468-BF94-5972C417FF52}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
