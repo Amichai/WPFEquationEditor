@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:Workbench.Controls"   
+        xmlns:sg="clr-namespace:GridSplitter;assembly=GridSplitter"
+             
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -33,9 +35,6 @@
         <TextBox Name="textResult" Grid.Row="1" Grid.Column="1" Visibility="Collapsed" IsReadOnly="True"
                  HorizontalScrollBarVisibility="Auto"
                  />
-        <Grid Grid.Row="1" Grid.Column="1" Name="UIResult" >
-            
-        </Grid>
         <Button Name="delResult" Visibility="Collapsed" Grid.Row="1" Grid.Column="2"
                 Click="delResult_Click_1"
                 Background="Transparent" BorderBrush="Transparent" Height="20" Margin="7" VerticalAlignment="Top">

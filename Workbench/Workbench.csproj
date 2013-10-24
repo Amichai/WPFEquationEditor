@@ -164,6 +164,10 @@
     <Resource Include="Assets\remove.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GridSplitter\GridSplitter.csproj">
+      <Project>{4b9e3965-90a1-4468-bf94-5972c417ff52}</Project>
+      <Name>GridSplitter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Workbench.Lib\Workbench.Lib.csproj">
       <Project>{7eeab055-4415-4339-bbc9-b6422b01e659}</Project>
       <Name>Workbench.Lib</Name>

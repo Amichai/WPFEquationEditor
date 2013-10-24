@@ -14,6 +14,11 @@
         </Grid.ColumnDefinitions>
         <TextBox Name="_texBox" Grid.Row="0" Grid.Column="0" />
         <Button Content="Add" Click="AddButton_Click" Grid.Row="0" Grid.Column="1" />
-        <local:SmartGrid x:Name="_smartGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <StackPanel  >
+
+                    <local:SmartGrid x:Name="_smartGrid" />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

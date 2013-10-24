@@ -18,7 +18,6 @@ namespace Workbench.Lib {
             }
             var chart = new Chart(false);
             chart.AddSeries(ts.GetLineSeries());
-            chart.Height = 300;
             return chart;
         }
 
@@ -32,7 +31,6 @@ namespace Workbench.Lib {
                 }
                 chart.AddSeries(ts.GetLineSeries());
             }
-            chart.Height = 300;
             return chart;
         }
 
@@ -45,7 +43,6 @@ namespace Workbench.Lib {
                 }
                 chart.AddSeries(ts.GetLineSeries());
             }
-            chart.Height = 300;
             return chart;
         }
     }

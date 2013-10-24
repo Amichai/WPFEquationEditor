@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -79,12 +80,15 @@ namespace Workbench.Controls {
             this.textResult.Visibility = Visibility.Visible;
         }
 
+        public Subject<FrameworkElement> NewUIResult = new Subject<FrameworkElement>();
+
         internal void SetResult(object result) {
             if (result is string) {
                 var asString = result as string;
                 stringResult(asString);
-            } else if (result is UIElement) {
-                this.UIResult.Children.Add(result as UIElement);
+            } else if (result is FrameworkElement) {
+                (result as FrameworkElement).Height = double.NaN;
+                this.NewUIResult.OnNext(result as FrameworkElement);
             } else if (result is IEnumerable) {
                 foreach (var r in (result as IEnumerable)) {
                     SetResult(r);
@@ -93,8 +97,6 @@ namespace Workbench.Controls {
                 stringResult(result.ToString());
             }
         }
-
-        ///TODO: implement chart resize functionality
 
         public void ClearResult() {
             this.delResult.Visibility = Visibility.Collapsed;

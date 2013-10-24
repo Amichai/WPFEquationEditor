@@ -21,15 +21,10 @@ namespace Workbench {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-
         public MainWindow() {
             InitializeComponent();
             CSharp = new CSharpEngine();
             AppendNewLine();
-            Observable.FromEventPattern(this, "PreviewMouseDown").Subscribe(e => {
-                setFocus();
-            });
-            
             setFocus();
         }
 
@@ -46,6 +41,13 @@ namespace Workbench {
             var newLine = new PageLine();
             Observable.FromEventPattern(newLine.del, "Click").Select(i => i.Sender).Subscribe(sl => {
                 this.allLines.Children.Remove((sl as Button).Tag as UIElement);
+            });
+            newLine.NewUIResult.Subscribe(i => {
+                var smartGrid = new GridSplitter.SmartGrid();
+                i.Height = double.NaN;
+                smartGrid.Add(i);
+                this.allLines.Children.Add(smartGrid);
+                selectedIndex++;
             });
 
             Observable.FromEventPattern(newLine.input, "PreviewKeyDown").Subscribe(i => {

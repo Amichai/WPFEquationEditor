@@ -30,22 +30,28 @@ namespace GridSplitter {
                 var e = elements.ElementAt(i / 2);
                 addControl(i, e);
             }
-            var toAdd = new Grid();
+            var toAdd = new Grid() { Height = 0 };
             addControl(elementCount * 2, toAdd);
         }
 
         private void addControl(int i, FrameworkElement child) {
+            double breakHeight = 4;
+            if (i == 0) {
+                breakHeight = 0;
+            }
             _grid.RowDefinitions.Add(new RowDefinition() {
-                Height = new GridLength(5)
+                Height = new GridLength(breakHeight)
             });
 
             GridLength length;
-            double height = child.ActualHeight;
-            if (height == 0 || double.IsNaN(height)) {
-                length = GridLength.Auto;
+            double height = child.Height;
+            if (double.IsNaN(height)) {
+                //length = GridLength.Auto;
+                length = new GridLength(300);
             } else {
                 length = new GridLength(height);
             }
+            //length = GridLength.Auto;
             _grid.RowDefinitions.Add(new RowDefinition() {
                 Height = length
             });
@@ -56,7 +62,7 @@ namespace GridSplitter {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
                 ResizeDirection = GridResizeDirection.Rows,
-                Background = Brushes.Black,
+                Background = Brushes.LightGray,
                 Tag = child
             };
 

@@ -18,7 +18,7 @@ namespace GridSplitter {
         public MainWindow() {
             InitializeComponent();
 
-            _smartGrid.Add(new TextBox() { Text = "AAA" });
+            _smartGrid.Add(new TextBox() { Text = "AAA", Height= 30 });
             //_smartGrid.Add(new TextBox() { Text = "" });
 
             _smartGrid.Add(new TextBlock() { Text = "BBB" });
