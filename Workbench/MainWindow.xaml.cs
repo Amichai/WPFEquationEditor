@@ -44,7 +44,7 @@ namespace Workbench {
             });
             newLine.NewUIResult.Subscribe(i => {
                 var smartGrid = new GridSplitter.SmartGrid();
-                i.Height = double.NaN;
+                //i.Height = double.NaN;
                 smartGrid.Add(i);
                 this.allLines.Children.Add(smartGrid);
                 selectedIndex++;
@@ -74,9 +74,14 @@ namespace Workbench {
 
         private int selectedIndex = 0;
 
+        ///TODO: thisi fails, because all lines contains result controls which aren't PageLines anymore
         private void setTextFromIndex(int index) {
             var count = this.allLines.Children.Count;
-            var text = (this.allLines.Children[index] as PageLine).input.Text;
+            var pl = (this.allLines.Children[index] as PageLine);
+            if (pl == null) {
+                return;
+            }
+            var text = pl.input.Text;
             var active = this.allLines.Children[count - 1];
             (active as PageLine).input.Text = text;
         }

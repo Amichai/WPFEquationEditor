@@ -21,7 +21,7 @@ namespace GridSplitter {
 
         private List<FrameworkElement> elements = new List<FrameworkElement>();
 
-        private void Rebuild() {
+        private void rebuild() {
             _grid.RowDefinitions.Clear();
             _grid.Children.Clear();
 
@@ -46,8 +46,8 @@ namespace GridSplitter {
             GridLength length;
             double height = child.Height;
             if (double.IsNaN(height)) {
-                //length = GridLength.Auto;
-                length = new GridLength(300);
+                length = GridLength.Auto;
+                //length = new GridLength(300);
             } else {
                 length = new GridLength(height);
             }
@@ -78,7 +78,7 @@ namespace GridSplitter {
 
         public void Add(FrameworkElement child) {
             elements.Add(child);
-            this.Rebuild();
+            this.rebuild();
         }
     }
 }

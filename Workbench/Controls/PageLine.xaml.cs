@@ -87,7 +87,7 @@ namespace Workbench.Controls {
                 var asString = result as string;
                 stringResult(asString);
             } else if (result is FrameworkElement) {
-                (result as FrameworkElement).Height = double.NaN;
+                //(result as FrameworkElement).Height = double.NaN;
                 this.NewUIResult.OnNext(result as FrameworkElement);
             } else if (result is IEnumerable) {
                 foreach (var r in (result as IEnumerable)) {

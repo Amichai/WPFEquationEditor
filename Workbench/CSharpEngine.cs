@@ -5,6 +5,7 @@ using Roslyn.Scripting.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,6 +28,9 @@ namespace Workbench {
             engine.AddReference(typeof(XElement).Assembly.Location);
             engine.AddReference(typeof(UIElement).Assembly.Location);
             engine.AddReference(typeof(DependencyObject).Assembly.Location);
+            engine.AddReference(typeof(FrameworkElement).Assembly.Location);
+            engine.AddReference(typeof(MethodInfo).Assembly.Location);
+
 
             //engine.AddReference(typeof(FunctionLibrary).Assembly.Location);
 
@@ -36,9 +40,12 @@ namespace Workbench {
 
             engine.AddReference(new MetadataFileReference(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll"));
             engine.AddReference(new MetadataFileReference(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll"));
+            engine.AddReference(new MetadataFileReference(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xaml.dll"));
+
 
 
             engine.ImportNamespace("System");
+            engine.ImportNamespace("System.Reflection");
             engine.ImportNamespace("System.Windows");
             engine.ImportNamespace("System.Collections.Generic");
             engine.ImportNamespace("System.Linq");
@@ -50,6 +57,8 @@ namespace Workbench {
 
             session = engine.CreateSession(this);
 
+            
+            
         }
 
         public void CSharpAssign(string inputText, string result, int lineNumber) {

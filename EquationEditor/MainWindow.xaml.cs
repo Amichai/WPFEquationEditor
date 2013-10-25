@@ -30,9 +30,9 @@ namespace EquationEditor {
             ///Modules: python, drawing, charting, equation editing
             ///File reading input output functionality, api integration
 
-            Modules.Add(new InputModules.IronPython()); 
+            //Modules.Add(new InputModules.IronPython()); 
             //Modules.Add(new InputModules.BlackBox());
-            //Modules.Add(new InputModules.EquationEditor());
+            Modules.Add(new InputModules.EquationEditor());
             //Modules.Add(new DrawingModule());
             //Modules.Add(new XamlParser());
             //Modules.Add(new LatexParser());
