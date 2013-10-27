@@ -270,6 +270,13 @@ namespace Workbench.Lib {
             return new LineSeries() { Title = Name, StrokeThickness = .5, Points = points, CanTrackerInterpolatePoints = false };
         }
 
+
+        public Chart Chart(bool dateTimeAxis = false) {
+            var chart = new Chart(dateTimeAxis);
+            chart.AddSeries(this.GetLineSeries());
+            return chart;
+        }
+
         public void ShowLineGraph(string title = "") {
             var chart = new Chart();
             chart.AddSeries(this.GetLineSeries());

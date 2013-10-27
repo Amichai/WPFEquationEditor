@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ILNumerics;
+using ILNumerics.Drawing;
+using ILNumerics.Drawing.Plotting;
+using Newtonsoft.Json.Linq;
 using Roslyn.Compilers;
 using Roslyn.Scripting;
 using Roslyn.Scripting.CSharp;
@@ -31,6 +34,9 @@ namespace Workbench {
             engine.AddReference(typeof(FrameworkElement).Assembly.Location);
             engine.AddReference(typeof(MethodInfo).Assembly.Location);
 
+            engine.AddReference(typeof(System.Drawing.Color).Assembly.Location);
+            engine.AddReference(typeof(ILScene).Assembly.Location);
+
 
             //engine.AddReference(typeof(FunctionLibrary).Assembly.Location);
 
@@ -41,6 +47,7 @@ namespace Workbench {
             engine.AddReference(new MetadataFileReference(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll"));
             engine.AddReference(new MetadataFileReference(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll"));
             engine.AddReference(new MetadataFileReference(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xaml.dll"));
+
 
 
 
@@ -55,6 +62,16 @@ namespace Workbench {
             engine.ImportNamespace("System.Xml.Linq");
             engine.ImportNamespace("Workbench.Lib");
 
+            /*
+             * using ILNumerics;
+using ILNumerics.Drawing;
+using ILNumerics.Drawing.Plotting;
+             */
+            engine.ImportNamespace("ILNumerics");
+            engine.ImportNamespace("ILNumerics.Drawing");
+            engine.ImportNamespace("ILNumerics.Drawing.Plotting");
+
+
             session = engine.CreateSession(this);
 
             
@@ -62,6 +79,7 @@ namespace Workbench {
         }
 
         public void CSharpAssign(string inputText, string result, int lineNumber) {
+            
             string lastValName = "_" + lineNumber.ToString();
             try {
                 session.Execute(@"var " + lastValName + " = " + inputText + ";");

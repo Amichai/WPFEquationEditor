@@ -15,6 +15,16 @@ namespace EquationEditor {
             this.Children = new List<Node>();
         }
 
+        public string AsText() {
+            if (this.TextRepresentation != null) {
+                return TextRepresentation;
+            } else {
+                return this.Token.Value;
+            }
+        }
+
+        public string TextRepresentation { get; set; }
+
         public FrameworkElement GetElement() {
             if (this.Token.Value == "/") {
                 StackPanel sp = new StackPanel() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
@@ -22,6 +32,28 @@ namespace EquationEditor {
                 sp.Children.Add(this.Children[1].GetElement());
                 sp.Children.Add(new Separator());
                 sp.Children.Add(this.Children[0].GetElement());
+
+                sp.PreviewMouseDown += (s, e) => {
+                    if (sp.Children.Count == 1) {
+                        return;
+                    }
+                    sp.Children.Clear();
+                    var textBox = new TextBox() {
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        Text = this.AsText(),
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                    sp.Children.Add(textBox);
+                    textBox.PreviewKeyDown += (s2, e2) => {
+                        if (e2.Key == System.Windows.Input.Key.Enter) {
+                            sp.Children.Clear();
+                            sp.Children.Add(this.Children[1].GetElement());
+                            sp.Children.Add(new Separator());
+                            sp.Children.Add(this.Children[0].GetElement());
+                        }
+                    };
+                };
+
                 return sp;
             } else if(this.Token.Value == "^"){
                 StackPanel sp = new StackPanel();

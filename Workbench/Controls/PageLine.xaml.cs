@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ILNumerics.Drawing;
+using ILNumerics.Drawing.Plotting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,6 +91,24 @@ namespace Workbench.Controls {
             } else if (result is FrameworkElement) {
                 //(result as FrameworkElement).Height = double.NaN;
                 this.NewUIResult.OnNext(result as FrameworkElement);
+            } else if (result is ILScene) {
+                ILPanel p = new ILPanel();
+                p.Scene.Add(result as ILScene);
+                System.Windows.Forms.Integration.WindowsFormsHost e = new System.Windows.Forms.Integration.WindowsFormsHost();
+                e.Child = p;
+                //e.Height = 500;
+                Grid g = new Grid();
+                g.Children.Add(e);
+                this.NewUIResult.OnNext(g as FrameworkElement);
+            } else if (result is ILPlotCube) {
+                ILPanel p = new ILPanel();
+                p.Scene.Add(result as ILPlotCube);
+                System.Windows.Forms.Integration.WindowsFormsHost e = new System.Windows.Forms.Integration.WindowsFormsHost();
+                e.Child = p;
+                //e.Height = 500;
+                Grid g = new Grid();
+                g.Children.Add(e);
+                this.NewUIResult.OnNext(g as FrameworkElement);
             } else if (result is IEnumerable) {
                 foreach (var r in (result as IEnumerable)) {
                     SetResult(r);

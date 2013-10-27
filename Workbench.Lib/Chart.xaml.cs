@@ -24,7 +24,7 @@ namespace Workbench.Lib {
         PlotModel plot = new PlotModel();
         public Chart(bool dateTimeAxis = true, Axis xAxis = null, Axis yAxis = null) {
             InitializeComponent();
-            this.Height = 300;
+            //this.Height = 300;
             Random rand = new Random();
             if (dateTimeAxis) {
                 plot.Axes.Add(new DateTimeAxis());

@@ -46,8 +46,8 @@ namespace GridSplitter {
             GridLength length;
             double height = child.Height;
             if (double.IsNaN(height)) {
-                length = GridLength.Auto;
-                //length = new GridLength(300);
+                //length = GridLength.Auto;
+                length = new GridLength(300);
             } else {
                 length = new GridLength(height);
             }

@@ -16,11 +16,14 @@ namespace EquationEditor {
                     Node n = new Node(t);
                     n.Children.Add(stackBuffer.Pop());
                     n.Children.Add(stackBuffer.Pop());
+                    n.TextRepresentation = n.Children[0].AsText() + t.Value + n.Children[1].AsText();
                     stackBuffer.Push(n);
                 } else if (t.Type == TokenType.function) {
                     Node n = new Node(t);
+                    n.TextRepresentation = t.Value;
                     for (int i = 0; i < t.NumberOfChildren; i++) {
                         n.Children.Add(stackBuffer.Pop());
+                        n.TextRepresentation += " " + n.Children.Last().TextRepresentation;
                     }
                     stackBuffer.Push(n);
                 } else {

@@ -14,3 +14,7 @@ Workbench.Lib/bin
 Workbench.Lib/obj/
 GridSplitter/bin
 GridSplitter/obj/
+Workbench.Lib/bin32/
+Workbench.Lib/bin64/
+Workbench/bin32/
+Workbench/bin64/
