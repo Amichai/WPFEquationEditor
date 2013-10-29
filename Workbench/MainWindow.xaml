@@ -6,9 +6,15 @@
         Title="MainWindow" Height="350" Width="525"
         PreviewKeyDown="Window_PreviewKeyDown_1">
     <Grid Background="White" Name="layoutRoot">
-        
-        <ScrollViewer>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Click="Save_Click_1" Margin="5" Padding="5,0,5,0">Save</Button>
+            <Button Click="Open_Click_1" Margin="5" Padding="5,0,5,0">Open</Button>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
             <!--<sg:SmartGrid x:Name="allLines" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />-->
             <StackPanel Name="allLines"/>
         </ScrollViewer>

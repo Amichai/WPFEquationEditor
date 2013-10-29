@@ -46,11 +46,11 @@ namespace Workbench.Lib {
             return chart;
         }
 
-        public static ILScene Plot(Func<double, double, double> zOfxy, double x0, double xf, double y0, double yf) {
+        public static ILScene Plot(Func<double, double, double> zOfxy, double x0, double xf, double y0, double yf, double pointsPerDimension = 700) {
             // create some test data (RBF) 
             ILArray<float> Y = 1;
-            double dx = (xf - x0) / 100;
-            double dy = (yf - y0) / 100;
+            double dx = (xf - x0) / pointsPerDimension;
+            double dy = (yf - y0) / pointsPerDimension;
 
 
             ILArray<float> result = ILMath.array<float>(new ILSize(xf, yf));
@@ -65,7 +65,7 @@ namespace Workbench.Lib {
             //  ILMath.linspace<float>(-2f, 2f, 100), Y);
             //Y = X * X;
             //Y = X * X + Y * Y;
-            //ILArray<float> A = 1 - ILMath.exp(-Y * 2f);
+            //ILArray<float> A = 1 - ILMath.exp(-Y * 2f);Charting.Plot(xyz, 0, 10, 0, 15)
 
             // create new scene, add plot cube
             var scene = new ILScene {
