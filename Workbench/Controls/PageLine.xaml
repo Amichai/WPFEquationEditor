@@ -24,7 +24,9 @@
             <TextBlock>:</TextBlock>
         </StackPanel>
         <TextBox Grid.Column="1" Margin="10"  PreviewMouseDown="UserControl_PreviewMouseDown_1"
-            BorderBrush="Black" BorderThickness="0" Name="input" AcceptsReturn="True"
+            BorderBrush="Black" BorderThickness="0" Name="input" AcceptsReturn="True" 
+                 TextWrapping="Wrap"
+                 FontFamily="Consolas" FontSize="14"
                  Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type c:PageLine}}}"
                  ></TextBox>
         <Button Name="del"  Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Height="20" Margin="7" VerticalAlignment="Top"
@@ -34,6 +36,7 @@
         </Button>
         <TextBox Name="textResult" Grid.Row="1" Grid.Column="1" Visibility="Collapsed" IsReadOnly="True"
                  HorizontalScrollBarVisibility="Auto"
+                 TextWrapping="Wrap"
                  />
         <Button Name="delResult" Visibility="Collapsed" Grid.Row="1" Grid.Column="2"
                 Click="delResult_Click_1"

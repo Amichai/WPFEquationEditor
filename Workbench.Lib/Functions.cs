@@ -89,5 +89,55 @@ namespace Workbench.Lib {
         public static Func<double, double> Derivative(this Func<double, double> function, double eps = .01) {
             return i => function.Derivative(i, eps);
         }
+
+        public static Func<double, double> Inverse(this Func<double, double> function, double min, double max, double eps = .01) {
+            return val => {
+                Func<double, double> toZero = i => function(i) - val;
+                return toZero.Zero(min, max, 10000, .001);
+            };
+        }
+
+        public static Func<double, double> ToFuncDoubleDouble(this Delegate function, params object[] parameters) {
+            Func<double, double> result = i => {
+                var parametersToPass = parameters.ToList();
+                parametersToPass.Add(i);
+                return (double)function.DynamicInvoke((object[])parametersToPass.ToArray());
+            };
+            return result;
+        }
+
+        public static Func<T, U> ToFunc<T, U>(this Delegate function, params object[] parameters) {
+            Func<T, U> result = i => {
+                var parametersToPass = parameters.ToList();
+                parametersToPass.Add(i);
+                return (U)function.DynamicInvoke((object[])parametersToPass.ToArray());
+            };
+            return result;
+        }
+
+        public static Func<T, U> ToFunc<T, U>(int index, Delegate function, params object[] parameters) {
+            Func<T, U> result = i => {
+                var parametersToPass = parameters.ToList();
+                parametersToPass.Insert(index, i);
+                return (U)function.DynamicInvoke((object[])parametersToPass.ToArray());
+            };
+            return result;
+        }
+
+        public static Func<double, double> ToFuncDoubleDouble(int inputIndex, Delegate function, params object[] parameters) {
+            Func<double, double> result = i => {
+                var parametersToPass = parameters.ToList();
+                parametersToPass.Insert(inputIndex, i);
+                return (double)function.DynamicInvoke((object[])parametersToPass.ToArray());
+            };
+            return result;
+        }
+
+        public static double Inverse(this Func<double, double> function, double val, double min, double max, double eps = .01) {
+            Func<double, double> toZero = i => function(i) - val;
+            return toZero.Zero(min, max, 10000, .001);
+        }
     }
+
+    ///TODO: implement numerical mathematics using sympy
 }

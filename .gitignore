@@ -18,3 +18,7 @@ Workbench.Lib/bin32/
 Workbench.Lib/bin64/
 Workbench/bin32/
 Workbench/bin64/
+PythonTester/bin/
+PythonTester/Lib
+PythonTester/obj/
+Workbench.Lib/Lib
