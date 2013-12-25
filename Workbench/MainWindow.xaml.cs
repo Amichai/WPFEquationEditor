@@ -62,6 +62,7 @@ namespace Workbench {
                 var sender = ((i.Sender as TextBox).Tag as PageLine);
                 var e = (i.EventArgs as KeyEventArgs);
                 if (e.Key == Key.Enter && (Keyboard.IsKeyDown(Key.RightShift) || Keyboard.IsKeyDown(Key.LeftShift))) {
+
                     var result = CSharp.AppendCSharp(newLine.input.Text, newLine.LineNumber);
                     newLine.SetResult(result);
                     AppendNewLine(new PageLine());
@@ -85,12 +86,16 @@ namespace Workbench {
         ///TODO: thisi fails, because all lines contains result controls which aren't PageLines anymore
         private void setTextFromIndex(int index) {
             var count = this.allLines.Children.Count;
+            var active = this.allLines.Children[count - 1] as PageLine;
+            if (active.input.Text.Contains('\n')) {
+                return;
+            }
+
             var pl = (this.allLines.Children[index] as PageLine);
             if (pl == null) {
                 return;
             }
             var text = pl.input.Text;
-            var active = this.allLines.Children[count - 1];
             (active as PageLine).input.Text = text;
         }
 

@@ -121,7 +121,7 @@ using ILNumerics.Drawing.Plotting;
                 }
                 return result;
             } catch (Exception ex) {
-                return ex.Message;
+                return ex.Message + " " + ex.InnerException;
             }
         }
     }

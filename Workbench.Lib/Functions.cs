@@ -43,7 +43,7 @@ namespace Workbench.Lib {
                 bool signMax = (maxEval > 0);
                 bool signMin = (minEval > 0);
                 if (signMax == signMin) {
-                    throw new Exception("Failed to converge");
+                    return double.NaN;
                 }
                 tryIndex = lowerBound + (range / 2);
                 tryEval = function(tryIndex);
@@ -70,7 +70,8 @@ namespace Workbench.Lib {
                 bool signMax = (maxEval > 0);
                 bool signMin = (minEval > 0);
                 if (signMax == signMin) {
-                    throw new Exception("Failed to converge");
+                    return double.NaN;
+
                 }
                 tryIndex = lowerBound + (range / 2);
                 tryEval = function(tryIndex);
@@ -91,10 +92,12 @@ namespace Workbench.Lib {
         }
 
         public static Func<double, double> Inverse(this Func<double, double> function, double min, double max, double eps = .01) {
-            return val => {
+            Func<double, double> toReturn;
+            toReturn = val => {
                 Func<double, double> toZero = i => function(i) - val;
                 return toZero.Zero(min, max, 10000, .001);
             };
+            return toReturn;
         }
 
         public static Func<double, double> ToFuncDoubleDouble(this Delegate function, params object[] parameters) {

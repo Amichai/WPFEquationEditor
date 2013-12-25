@@ -25,7 +25,15 @@ namespace Workbench.Lib {
             }
             TimeSeries ts = new TimeSeries("");
             for (double i = x0; i < xf; i += dx) {
-                ts.Add(i, f(i));
+                try {
+                    var r = f(i);
+                    if (double.IsNaN(r)) {
+                        continue;
+                    }
+                    ts.Add(i, r);
+                } catch {
+
+                }
             }
             var chart = new Chart(false);
             //chart.Height = 300;
@@ -39,7 +47,15 @@ namespace Workbench.Lib {
             foreach (var f in funcs) {
                 TimeSeries ts = new TimeSeries("");
                 for (double i = x0; i < xf; i += dx) {
-                    ts.Add(i, f(i));
+                    try {
+                        var r = f(i);
+                        if (double.IsNaN(r)) {
+                            continue;
+                        }
+                        ts.Add(i, r);
+                    } catch {
+
+                    }
                 }
                 chart.AddSeries(ts.GetLineSeries());
             }
